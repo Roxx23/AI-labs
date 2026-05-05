@@ -1,0 +1,52 @@
+% --- FACTS (World Setup) ---
+
+% Wumpus location
+wumpus(2,3).
+
+% Pit locations
+pit(3,1).
+pit(4,4).
+
+% Gold location
+gold(2,2).
+
+% --- RULES (Percepts) ---
+
+% Adjacent cells
+adjacent(X,Y,X1,Y) :- X1 is X+1.
+adjacent(X,Y,X1,Y) :- X1 is X-1.
+adjacent(X,Y,X,Y1) :- Y1 is Y+1.
+adjacent(X,Y,X,Y1) :- Y1 is Y-1.
+
+% Breeze: if adjacent to pit
+breeze(X,Y) :- pit(X1,Y1), adjacent(X,Y,X1,Y1).
+
+% Stench: if adjacent to wumpus
+stench(X,Y) :- wumpus(X1,Y1), adjacent(X,Y,X1,Y1).
+
+% Glitter: if gold is here
+glitter(X,Y) :- gold(X,Y).
+
+% --- SAFE CELL RULE ---
+
+safe(X,Y) :-
+    \+ pit(X,Y),
+    \+ wumpus(X,Y).
+
+% --- DANGER INFERENCE ---
+
+danger(X,Y) :-
+    pit(X,Y);
+    wumpus(X,Y).
+
+% --- POSSIBLE WUMPUS LOCATION (Inference) ---
+
+possible_wumpus(X,Y) :-
+    stench(X1,Y1),
+    adjacent(X1,Y1,X,Y).
+
+% --- POSSIBLE PIT LOCATION (Inference) ---
+
+possible_pit(X,Y) :-
+    breeze(X1,Y1),
+    adjacent(X1,Y1,X,Y).
