@@ -1,0 +1,49 @@
+bird(sparrow).
+bird(peacock).
+bird(penguin).
+bird(ostrich).
+
+can_fly(sparrow).
+can_fly(peacock).
+
+cannot_fly(penguin).
+cannot_fly(ostrich).
+
+water_bird(penguin).
+water_bird(duck).
+
+flightless_bird(X) :- bird(X), cannot_fly(X).
+flying_bird(X) :- bird(X), can_fly(X).
+
+:- initialization(main).
+
+main :-
+    write('Enter bird name: '), nl,
+    read(X),
+
+    (bird(X) ->
+        write('It is a bird'), nl
+    ;
+        write('Not a bird'), nl
+    ),
+
+    (flying_bird(X) ->
+        write('It can fly'), nl
+    ;
+        write('It cannot fly or unknown'), nl
+    ),
+
+    (flightless_bird(X) ->
+        write('It is a flightless bird'), nl
+    ;
+        write('Not a flightless bird'), nl
+    ),
+
+    (water_bird(X) ->
+        write('It is a water bird'), nl
+    ;
+        write('Not a water bird'), nl
+    ).
+
+input
+penguin.

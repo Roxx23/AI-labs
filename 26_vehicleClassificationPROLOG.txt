@@ -1,0 +1,80 @@
+vehicle(car).
+vehicle(bus).
+vehicle(truck).
+vehicle(bike).
+vehicle(scooter).
+vehicle(bicycle).
+vehicle(train).
+
+two_wheeler(bike).
+two_wheeler(scooter).
+two_wheeler(bicycle).
+
+four_wheeler(car).
+four_wheeler(bus).
+four_wheeler(truck).
+
+heavy_vehicle(bus).
+heavy_vehicle(truck).
+heavy_vehicle(train).
+
+light_vehicle(bike).
+light_vehicle(scooter).
+light_vehicle(bicycle).
+light_vehicle(car).
+
+public_transport(bus).
+public_transport(train).
+
+private_vehicle(car).
+private_vehicle(bike).
+private_vehicle(scooter).
+
+:- initialization(main).
+
+main :-
+    write('Enter vehicle name: '), nl,
+    read(X),
+
+    (vehicle(X) ->
+        write('It is a vehicle'), nl
+    ;
+        write('Not a vehicle'), nl
+    ),
+
+    (two_wheeler(X) ->
+        write('It is a two wheeler'), nl
+    ;
+        true
+    ),
+
+    (four_wheeler(X) ->
+        write('It is a four wheeler'), nl
+    ;
+        true
+    ),
+
+    (heavy_vehicle(X) ->
+        write('It is a heavy vehicle'), nl
+    ;
+        true
+    ),
+
+    (light_vehicle(X) ->
+        write('It is a light vehicle'), nl
+    ;
+        true
+    ),
+
+    (public_transport(X) ->
+        write('It is public transport'), nl
+    ;
+        true
+    ),
+
+    (private_vehicle(X) ->
+        write('It is a private vehicle'), nl
+    ;
+        true
+    ).
+    

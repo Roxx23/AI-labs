@@ -1,0 +1,66 @@
+positive(good).
+positive(happy).
+positive(excellent).
+positive(love).
+positive(amazing).
+
+negative(bad).
+negative(sad).
+negative(terrible).
+negative(hate).
+negative(worst).
+
+:- initialization(main).
+
+main :-
+    write('Enter number of words: '), nl,
+    read(N),
+    read_words(N, Words),
+    count_positive(Words, P),
+    count_negative(Words, Neg),
+    nl,
+    write('Sentiment: '),
+    decide(P, Neg).
+
+read_words(0, []).
+read_words(N, [H|T]) :-
+    N > 0,
+    write('Enter word: '), nl,
+    read(H),
+    N1 is N - 1,
+    read_words(N1, T).
+
+count_positive([], 0).
+count_positive([H|T], Count) :-
+    positive(H),
+    count_positive(T, C),
+    Count is C + 1.
+count_positive([H|T], Count) :-
+    \+ positive(H),
+    count_positive(T, Count).
+
+count_negative([], 0).
+count_negative([H|T], Count) :-
+    negative(H),
+    count_negative(T, C),
+    Count is C + 1.
+count_negative([H|T], Count) :-
+    \+ negative(H),
+    count_negative(T, Count).
+
+decide(P, N) :-
+    P > N,
+    write('Positive'), nl.
+decide(P, N) :-
+    N > P,
+    write('Negative'), nl.
+decide(P, N) :-
+    P =:= N,
+    write('Neutral'), nl.
+
+input
+4.
+good.
+happy.
+bad.
+amazing.

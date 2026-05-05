@@ -1,0 +1,57 @@
+job(software_engineer).
+job(data_scientist).
+job(web_developer).
+job(network_engineer).
+
+match(software_engineer, Skills) :-
+    member(java, Skills),
+    member(cpp, Skills).
+
+match(data_scientist, Skills) :-
+    member(python, Skills),
+    member(machine_learning, Skills),
+    member(data_analysis, Skills).
+
+match(web_developer, Skills) :-
+    member(html, Skills),
+    member(css, Skills),
+    member(javascript, Skills).
+
+match(network_engineer, Skills) :-
+    member(networking, Skills).
+
+:- initialization(main).
+
+main :-
+    write('Enter number of skills: '), nl,
+    read(N),
+    read_skills(N, Skills),
+    nl,
+    write('Matching Jobs:'), nl,
+    findall(J, match(J, Skills), Jobs),
+    (
+        Jobs = [] ->
+        write('No matching job found'), nl
+        ;
+        print_jobs(Jobs)
+    ).
+
+read_skills(0, []).
+read_skills(N, [H|T]) :-
+    N > 0,
+    write('Enter skill: '), nl,
+    read(H),
+    N1 is N - 1,
+    read_skills(N1, T).
+
+print_jobs([]).
+print_jobs([H|T]) :-
+    write(H), nl,
+    print_jobs(T).
+
+
+input
+3.
+python.
+machine_learning.
+data_analysis.

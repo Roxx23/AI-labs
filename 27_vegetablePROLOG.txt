@@ -1,0 +1,60 @@
+food(apple).
+food(banana).
+food(mango).
+food(carrot).
+food(potato).
+food(spinach).
+food(tomato).
+
+fruit(apple).
+fruit(banana).
+fruit(mango).
+
+vegetable(carrot).
+vegetable(potato).
+vegetable(spinach).
+vegetable(tomato).
+
+root_vegetable(carrot).
+root_vegetable(potato).
+
+leafy_vegetable(spinach).
+
+:- initialization(main).
+
+main :-
+    write('Enter food name: '), nl,
+    read(X),
+
+    (food(X) ->
+        write('It is a food item'), nl
+    ;
+        write('Unknown item'), nl
+    ),
+
+    (fruit(X) ->
+        write('It is a fruit'), nl
+    ;
+        true
+    ),
+
+    (vegetable(X) ->
+        write('It is a vegetable'), nl
+    ;
+        true
+    ),
+
+    (root_vegetable(X) ->
+        write('It is a root vegetable'), nl
+    ;
+        true
+    ),
+
+    (leafy_vegetable(X) ->
+        write('It is a leafy vegetable'), nl
+    ;
+        true
+    ).
+
+input
+carrot.

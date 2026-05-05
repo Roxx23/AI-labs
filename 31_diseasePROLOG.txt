@@ -1,0 +1,59 @@
+disease(flu).
+disease(covid).
+disease(malaria).
+disease(typhoid).
+
+identify(flu, Symptoms) :-
+    member(fever, Symptoms),
+    member(cough, Symptoms),
+    member(body_ache, Symptoms).
+
+identify(covid, Symptoms) :-
+    member(fever, Symptoms),
+    member(cough, Symptoms),
+    member(loss_of_taste, Symptoms).
+
+identify(malaria, Symptoms) :-
+    member(fever, Symptoms),
+    member(chills, Symptoms),
+    member(sweating, Symptoms).
+
+identify(typhoid, Symptoms) :-
+    member(fever, Symptoms),
+    member(headache, Symptoms),
+    member(stomach_pain, Symptoms).
+
+:- initialization(main).
+
+main :-
+    write('Enter number of symptoms: '), nl,
+    read(N),
+    read_symptoms(N, Symptoms),
+    nl,
+    write('Possible Disease:'), nl,
+    findall(D, identify(D, Symptoms), Diseases),
+    (
+        Diseases = [] ->
+        write('No matching disease found'), nl
+        ;
+        print_list(Diseases)
+    ).
+
+read_symptoms(0, []).
+read_symptoms(N, [H|T]) :-
+    N > 0,
+    write('Enter symptom: '), nl,
+    read(H),
+    N1 is N - 1,
+    read_symptoms(N1, T).
+
+print_list([]).
+print_list([H|T]) :-
+    write(H), nl,
+    print_list(T).
+
+input
+3.
+fever.
+cough.
+loss_of_taste.

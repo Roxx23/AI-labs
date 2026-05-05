@@ -1,0 +1,59 @@
+animal(lion).
+animal(tiger).
+animal(elephant).
+animal(giraffe).
+animal(zebra).
+
+identify(lion, Features) :-
+    member(carnivore, Features),
+    member(has_mane, Features).
+
+identify(tiger, Features) :-
+    member(carnivore, Features),
+    member(stripes, Features).
+
+identify(elephant, Features) :-
+    member(herbivore, Features),
+    member(trunk, Features).
+
+identify(giraffe, Features) :-
+    member(herbivore, Features),
+    member(long_neck, Features).
+
+identify(zebra, Features) :-
+    member(herbivore, Features),
+    member(stripes, Features).
+
+:- initialization(main).
+
+main :-
+    write('Enter number of features: '), nl,
+    read(N),
+    read_features(N, Features),
+    nl,
+    write('Possible Animal:'), nl,
+    findall(A, identify(A, Features), Animals),
+    (
+        Animals = [] ->
+        write('No matching animal found'), nl
+        ;
+        print_list(Animals)
+    ).
+
+read_features(0, []).
+read_features(N, [H|T]) :-
+    N > 0,
+    write('Enter feature: '), nl,
+    read(H),
+    N1 is N - 1,
+    read_features(N1, T).
+
+print_list([]).
+print_list([H|T]) :-
+    write(H), nl,
+    print_list(T).
+
+input
+2.
+carnivore.
+stripes.

@@ -1,0 +1,61 @@
+male(john).
+male(paul).
+male(mike).
+male(tom).
+
+female(lisa).
+female(anna).
+female(sara).
+female(emma).
+
+parent(john, paul).
+parent(john, anna).
+parent(lisa, paul).
+parent(lisa, anna).
+
+parent(paul, mike).
+parent(paul, sara).
+parent(anna, tom).
+parent(anna, emma).
+
+father(X, Y) :- male(X), parent(X, Y).
+mother(X, Y) :- female(X), parent(X, Y).
+
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+
+brother(X, Y) :- male(X), sibling(X, Y).
+sister(X, Y) :- female(X), sibling(X, Y).
+
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+
+uncle(X, Y) :- male(X), sibling(X, Z), parent(Z, Y).
+
+:- initialization(main).
+
+main :-
+    write('Enter first person: '), nl,
+    read(X),
+    write('Enter second person: '), nl,
+    read(Y),
+    nl,
+    write('Relations:'), nl,
+
+    (father(X, Y) -> write('Father'), nl ; true),
+    (mother(X, Y) -> write('Mother'), nl ; true),
+    (sibling(X, Y) -> write('Sibling'), nl ; true),
+    (brother(X, Y) -> write('Brother'), nl ; true),
+    (sister(X, Y) -> write('Sister'), nl ; true),
+    (grandparent(X, Y) -> write('Grandparent'), nl ; true),
+    (uncle(X, Y) -> write('Uncle'), nl ; true),
+
+    ( \+ father(X,Y), \+ mother(X,Y), \+ sibling(X,Y),
+      \+ brother(X,Y), \+ sister(X,Y),
+      \+ grandparent(X,Y), \+ uncle(X,Y) ->
+        write('No relation found'), nl
+    ;
+        true
+    ).
+
+input
+john.
+paul.
