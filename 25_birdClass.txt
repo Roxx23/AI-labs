@@ -1,0 +1,57 @@
+% ----------- FACTS (Bird Features) -----------
+
+% format: has_feature(Bird, Feature)
+
+has_feature(sparrow, small).
+has_feature(sparrow, flies).
+has_feature(sparrow, chirps).
+
+has_feature(eagle, large).
+has_feature(eagle, flies).
+has_feature(eagle, sharp_vision).
+
+has_feature(penguin, medium).
+has_feature(penguin, swims).
+has_feature(penguin, cannot_fly).
+
+has_feature(ostrich, large).
+has_feature(ostrich, cannot_fly).
+has_feature(ostrich, runs_fast).
+
+has_feature(parrot, medium).
+has_feature(parrot, flies).
+has_feature(parrot, talks).
+
+% ----------- RULES (Classification) -----------
+
+bird(X) :- has_feature(X, flies).
+bird(X) :- has_feature(X, cannot_fly).
+
+% classification rules
+type(X, small_bird) :-
+    has_feature(X, small),
+    has_feature(X, flies).
+
+type(X, bird_of_prey) :-
+    has_feature(X, large),
+    has_feature(X, sharp_vision).
+
+type(X, flightless_bird) :-
+    has_feature(X, cannot_fly).
+
+type(X, swimming_bird) :-
+    has_feature(X, swims).
+
+type(X, talking_bird) :-
+    has_feature(X, talks).
+
+% ----------- IDENTIFICATION RULE -----------
+
+identify(X) :-
+    bird(X),
+    type(X, T),
+    write(X), write(' is a '), write(T), nl.
+
+?- identify(sparrow).
+?- identify(penguin).
+?- type(eagle, X).

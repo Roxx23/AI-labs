@@ -1,0 +1,80 @@
+% ----------- FACTS (Features) -----------
+
+% format: has_feature(Item, Feature)
+
+has_feature(apple, sweet).
+has_feature(apple, edible_raw).
+has_feature(apple, has_seeds).
+
+has_feature(banana, sweet).
+has_feature(banana, edible_raw).
+has_feature(banana, no_visible_seeds).
+
+has_feature(carrot, crunchy).
+has_feature(carrot, root).
+has_feature(carrot, edible_raw).
+
+has_feature(potato, starchy).
+has_feature(potato, root).
+has_feature(potato, cooked).
+
+has_feature(tomato, juicy).
+has_feature(tomato, has_seeds).
+has_feature(tomato, edible_raw).
+
+has_feature(cucumber, watery).
+has_feature(cucumber, has_seeds).
+has_feature(cucumber, edible_raw).
+
+has_feature(spinach, leafy).
+has_feature(spinach, green).
+has_feature(spinach, cooked).
+
+% ----------- RULES (Classification) -----------
+
+% Fruit: typically has seeds
+fruit(X) :-
+    has_feature(X, has_seeds).
+
+% Vegetable: root or leafy or no seeds
+vegetable(X) :-
+    has_feature(X, root);
+    has_feature(X, leafy);
+    has_feature(X, no_visible_seeds).
+
+% Sub-classifications
+type(X, root_vegetable) :-
+    has_feature(X, root).
+
+type(X, leafy_vegetable) :-
+    has_feature(X, leafy).
+
+type(X, sweet_fruit) :-
+    fruit(X),
+    has_feature(X, sweet).
+
+type(X, juicy_fruit) :-
+    fruit(X),
+    has_feature(X, juicy).
+
+type(X, raw_food) :-
+    has_feature(X, edible_raw).
+
+type(X, cooked_food) :-
+    has_feature(X, cooked).
+
+% ----------- IDENTIFICATION RULE -----------
+
+identify(X) :-
+    fruit(X),
+    write(X), write(' is a fruit'), nl,
+    (type(X, T), write('Type: '), write(T), nl ; true).
+
+identify(X) :-
+    vegetable(X),
+    write(X), write(' is a vegetable'), nl,
+    (type(X, T), write('Type: '), write(T), nl ; true).
+
+?- identify(apple).
+?- identify(carrot).
+?- fruit(tomato).

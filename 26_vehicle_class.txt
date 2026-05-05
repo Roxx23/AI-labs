@@ -1,0 +1,63 @@
+% ----------- FACTS (Vehicle Features) -----------
+
+% format: has_feature(Vehicle, Feature)
+
+has_feature(car, four_wheels).
+has_feature(car, engine).
+has_feature(car, private_use).
+
+has_feature(bus, four_wheels).
+has_feature(bus, engine).
+has_feature(bus, public_transport).
+
+has_feature(bicycle, two_wheels).
+has_feature(bicycle, no_engine).
+has_feature(bicycle, eco_friendly).
+
+has_feature(truck, six_wheels).
+has_feature(truck, engine).
+has_feature(truck, goods_transport).
+
+has_feature(motorcycle, two_wheels).
+has_feature(motorcycle, engine).
+has_feature(motorcycle, fast).
+
+has_feature(train, many_wheels).
+has_feature(train, engine).
+has_feature(train, public_transport).
+
+% ----------- RULES (Classification) -----------
+
+vehicle(X) :- has_feature(X, engine).
+vehicle(X) :- has_feature(X, no_engine).
+
+type(X, light_vehicle) :-
+    has_feature(X, two_wheels).
+
+type(X, heavy_vehicle) :-
+    has_feature(X, six_wheels);
+    has_feature(X, many_wheels).
+
+type(X, public_transport_vehicle) :-
+    has_feature(X, public_transport).
+
+type(X, private_vehicle) :-
+    has_feature(X, private_use).
+
+type(X, eco_friendly_vehicle) :-
+    has_feature(X, no_engine);
+    has_feature(X, eco_friendly).
+
+type(X, goods_vehicle) :-
+    has_feature(X, goods_transport).
+
+% ----------- IDENTIFICATION RULE -----------
+
+identify(X) :-
+    vehicle(X),
+    type(X, T),
+    write(X), write(' is a '), write(T), nl.
+
+?- identify(car).
+?- identify(bicycle).
+?- type(truck, X).
